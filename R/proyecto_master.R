@@ -1,3 +1,6 @@
+#Funciones necesarias
+#iptools, rworldmap, sp
+
 get_blacklist_abuse<-function() {
   l <- read.table("https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.rules", header = TRUE, sep = " ")
   ip<- substring(as.character(l[,6]),2,nchar(as.character(l[,6]))-1)
