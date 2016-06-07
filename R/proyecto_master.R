@@ -1,5 +1,5 @@
 #Funciones necesarias
-#iptools, rworldmap, sp
+#iptools, rworldmap, sp, dplayr
 
 get_blacklist_abuse<-function() {
   l <- read.table("https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.rules", header = TRUE, sep = " ")
