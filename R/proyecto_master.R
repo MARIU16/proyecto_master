@@ -37,3 +37,15 @@ blacklist_countries<-function(){
 tt<-summary.factor(pais, data=tabla1)
 total_pais<-data.frame(tt)
 View(total_pais)
+
+plot_map<-function(){
+  a  <- dplyr::count(tabla1, paisl)
+  map  <- joinCountryData2Map(a,
+                              joinCode = "ISO2",
+                              nameJoinColumn = "paisl",
+                              suggestForFailedCodes = T,
+                              mapResolution = "coarse",
+                              projection = NA, 
+                              verbose = T)
+  mapCountryData(map, nameColumnToPlot="n")
+}
