@@ -1,5 +1,5 @@
 #Funciones necesarias
-#iptools, rworldmap, sp, dplayr
+#iptools, rworldmap, sp, dplayr, rworldmap, rcolorbrewer
 
 get_blacklist_abuse<-function() {
   l <- read.table("https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.rules", header = TRUE, sep = " ")
@@ -33,13 +33,12 @@ blacklist_countries<-function(){
   paisf<-data.frame(pais, paisl)
   tabla1<-cbind(tabla1,paisf)
 }
-##Sumar por pais fuente: https://view.officeapps.live.com/op/view.aspx?src=http://personales.unican.es/gonzaleof/Itop/jaime/Pract_1_R.doc
-tt<-summary.factor(pais, data=tabla1)
-total_pais<-data.frame(tt)
-View(total_pais)
 
+##creacion de mapa
 plot_map<-function(){
-  a  <- dplyr::count(tabla1, paisl)
+  ##total cantidad por pais
+  a  <- dplyr::count(tabla1, paisl) 
+  ##crea el mapa
   map  <- joinCountryData2Map(a,
                               joinCode = "ISO2",
                               nameJoinColumn = "paisl",
@@ -47,5 +46,21 @@ plot_map<-function(){
                               mapResolution = "coarse",
                               projection = NA, 
                               verbose = T)
-  mapCountryData(map, nameColumnToPlot="n")
+  ##parametros del mapa
+  mapParams<-mapCountryData(map, missingCountryCol="gray99", oceanCol="aliceblue",
+                            nameColumnToPlot="n",
+                            mapTitle="SSL IPBL for Suricata / Snort (Aggressive) / for Country",
+                            mapRegion="world",
+                            colourPalette = c("Gray87","lightblue1","lightskyblue","royalblue1","royalblue3","royalblue4" ),
+                            borderCol="azure4",
+                            addLegend=T,
+                            catMethod="dategorical",
+                            
+  )
+  ##aplica los parametros en el mapa
+  do.call( addMapLegend, c( mapParams
+                            , legendLabels="all"
+                            , legendWidth=0.7)
+  )
+  
 }
