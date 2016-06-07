@@ -31,6 +31,6 @@ blacklist_countries<-function(){
   tabla1<-cbind(tabla1,paisf)
 }
 ##Sumar por pais fuente: https://view.officeapps.live.com/op/view.aspx?src=http://personales.unican.es/gonzaleof/Itop/jaime/Pract_1_R.doc
-tt<-summary.factor(pais, data=tabla1)
+tt<-summary.factor(paisl, data=tabla1)
 total_pais<-data.frame(tt)
 View(total_pais)
