@@ -6,6 +6,9 @@ get_blacklist_abuse<-function() {
   puerto<-l[,7]
   tabla1<-data.frame(ip_decimal,ip,protocolo,puerto, stringsAsFactors = FALSE)
 }
+show_bl<-function(){
+  View(tabla1)
+}
 
 get_ip_countries<-function(){
   download.file(url="http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip", destfile="paises.zip")
@@ -29,6 +32,10 @@ blacklist_countries<-function(){
   }
   paisf<-data.frame(pais, paisl)
   tabla1<-cbind(tabla1,paisf)
+}
+
+show_bl_coutry<-function(){
+  View(a)
 }
 
 ##creacion de mapa
