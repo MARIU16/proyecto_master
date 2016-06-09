@@ -1,5 +1,5 @@
 #Funciones necesarias
-#iptools, rworldmap, sp, dplayr, rworldmap, rcolorbrewer
+#iptools, rworldmap, sp, dplayr, rworldmap, rcolorbrewer, knirt (para package)
 
 get_blacklist_abuse<-function() {
   l <- read.table("https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.rules", header = TRUE, sep = " ")
@@ -53,7 +53,7 @@ plot_map<-function(){
                             mapRegion="world",
                             colourPalette = c("Gray87","lightblue1","lightskyblue","royalblue1","royalblue3","royalblue4" ),
                             borderCol="azure4",
-                            addLegend=T,
+                            addLegend=F,
                             catMethod="dategorical",
                             
   )
