@@ -1,3 +1,9 @@
+#' Title
+#' 
+#' @return
+#' @export
+#' @param
+#' @examples
 get_blacklist_abuse<-function() {
   l <- read.table("https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.rules", header = TRUE, sep = " ")
   ip<- substring(as.character(l[,6]),2,nchar(as.character(l[,6]))-1)
@@ -6,10 +12,23 @@ get_blacklist_abuse<-function() {
   puerto<-l[,7]
   tabla1<-data.frame(ip_decimal,ip,protocolo,puerto, stringsAsFactors = FALSE)
 }
+
+#' Title
+#' 
+#' @return
+#' @export
+#' @param
+#' @examples
 show_bl<-function(){
   View(tabla1)
 }
 
+#' Title
+#' 
+#' @return
+#' @export
+#' @param
+#' @examples
 get_ip_countries<-function(){
   download.file(url="http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip", destfile="paises.zip")
   unzip("paises.zip")
@@ -22,6 +41,12 @@ get_ip_countries<-function(){
 }
 
 
+#' Title
+#' 
+#' @return
+#' @export
+#' @param
+#' @examples
 blacklist_countries<-function(){
   pais<-matrix(nrow = nrow(tabla1),ncol = 1)
   paisl<-matrix(nrow = nrow(tabla1),ncol = 1)
@@ -34,11 +59,23 @@ blacklist_countries<-function(){
   tabla1<-cbind(tabla1,paisf)
 }
 
+#' Title
+#' 
+#' @return
+#' @export
+#' @param
+#' @examples
 show_bl_coutry<-function(){
   View(a)
 }
 
 ##creacion de mapa
+#' Title
+#' 
+#' @return
+#' @export
+#' @param
+#' @examples
 plot_map<-function(){
   ##total cantidad por pais
   a  <- dplyr::count(tabla1, paisl) 
