@@ -10,7 +10,7 @@ get_blacklist_abuse<-function() {
   ip_decimal<-ip_to_numeric(ip)
   protocolo<-l[,2]
   puerto<-l[,7]
-  tabla1<-data.frame(ip_decimal,ip,protocolo,puerto, stringsAsFactors = FALSE)
+  blacklist<-data.frame(ip_decimal,ip,protocolo,puerto, stringsAsFactors = FALSE)
 }
 
 #' @Title
@@ -18,10 +18,15 @@ get_blacklist_abuse<-function() {
 #' @export
 #' @param
 #' @examples
+<<<<<<< HEAD
 ## muestra el data frame con la blacklist descargada desde la fuente
 show_blacklist<-function(){
   bl<-get_blacklist_abuse()
   View(bl)
+=======
+show_bl<-function(){
+  View(blacklist)
+>>>>>>> 878657903ca83e15d82f322199739057815b8db6
 }
 
 #' @Title
@@ -38,7 +43,7 @@ get_ip_countries<-function(){
   de2<-p[,4]
   pa<-as.character(p[,5])
   psa<-as.character(p[,6])
-  tabla2<-data.frame(de1,de2,pa,psa, stringsAsFactors = FALSE)
+  ipcountry<-data.frame(de1,de2,pa,psa, stringsAsFactors = FALSE)
 }
 
 #' @Title
@@ -58,6 +63,7 @@ show_ip_countries<-function(){
 #' @export
 #' @param
 #' @examples
+<<<<<<< HEAD
 ## añade al blacklis las columnas de los paises segun las ips
 get_blacklist_countries<-function(){
   bl<-get_blacklist_abuse()
@@ -94,6 +100,18 @@ get_number_blackip_coutry<-function(){
   bl<-get_blacklist_abuse()
   bl_c<-get_blacklist_countries()
   a  <- dplyr::count(bl,bl_c$paisl) 
+=======
+blacklist_countries<-function(){
+  pais<-matrix(nrow = nrow(blacklist),ncol = 1)
+  paisl<-matrix(nrow = nrow(blacklist),ncol = 1)
+  for (i in 1:nrow(blacklist)){
+    compare <- ((ipcountry$de1 <= blacklist$ip_decimal[i]) & (blacklist$ip_decimal[i] <= ipcountry$de2))
+    pais[i,1]<-ipcountry[compare,4]
+    paisl[i,1]<-ipcountry[compare,3]
+  }
+  paisf<-data.frame(pais, paisl)
+  blacklist<-cbind(blacklist,paisf)
+>>>>>>> 878657903ca83e15d82f322199739057815b8db6
 }
 
 #' @Title
@@ -117,7 +135,11 @@ show_number_blackip_coutry<-function(){
 ## creación de mapa
 plot_map<-function(){
   ##total cantidad por pais
+<<<<<<< HEAD
   a<-get_number_blackip_coutry()
+=======
+  a  <- dplyr::count(blacklist, paisl) 
+>>>>>>> 878657903ca83e15d82f322199739057815b8db6
   ##crea el mapa
   map  <- joinCountryData2Map(a,
                               joinCode = "ISO2",
@@ -143,3 +165,4 @@ plot_map<-function(){
   )
   
 }
+
