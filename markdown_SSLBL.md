@@ -26,32 +26,23 @@ Ip's black list (SSLBL) can be used to compare with any ip's log and know who ha
 
 
 
-```{r}
-library(proyectomaster)
-proyectomaster::show_blacklist()
+```
 ```
 
 The range of ip's by countries was downloaded from: [Geolite web page](http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip): 
 
 
-```{r}
-library(proyectomaster)
-proyectomaster::show_ip_countries()
+```
 ```
 Then we realized the matching between the SSLBL and IPS by countries and the following result was obtained
 
 
-```{r}
-library(proyectomaster)
-proyectomaster::show_number_blackip_coutry()
-
+```
 ```
 And finally we show the result
 
 ## **Map**
 
-```{r}
-library(proyectomaster)
-proyectomaster::plot_map()
+```
 ```
 

@@ -21,52 +21,22 @@ Ip's black list (SSLBL) can be used to compare with any ip's log and know who ha
 
 
 ```{r,echo=FALSE}
-  library(ggplot2)
-  library(iptools)
-  library(dplyr)
-  library(sp)
-  library(rworldmap)
-  library(knitr)
-
-  l <- read.table("https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.rules", header = TRUE, sep = " ")
-  ip<- substring(as.character(l[,6]),2,nchar(as.character(l[,6]))-1)
-  ip_decimal<-ip_to_numeric(ip)
-  protocolo<-l[,2]
-  puerto<-l[,7]
-  blacklist<-data.frame(ip_decimal,ip,protocolo,puerto, stringsAsFactors = FALSE)
-
+  library(proyectomaster)
+proyectomaster::show_blacklist()
 ```
 
 
-```{r,echo=TRUE}
-
-  show(blacklist)
-
-```
 **The range of ip's by countries was downloaded from: Geolite web page:** [Geoplite]('http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip')
 
 ```{r, echo=FALSE}
- download.file(url="http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip", destfile="paises.zip")
-  unzip("paises.zip")
-  p <- read.table("GeoIPCountryWhois.csv",header = TRUE, sep = ",")
-  de1<-p[,3]
-  de2<-p[,4]
-  pa<-as.character(p[,5])
-  psa<-as.character(p[,6])
-  ipcountry<-data.frame(de1,de2,pa,psa, stringsAsFactors = FALSE)
+ library(proyectomaster)
+proyectomaster::show_ip_countries()
 ```
 **Then we realized the matching between the SSLBL and IPS by countries and the following result was obtained**
 
 ```{r, echo=FALSE}
-pais<-matrix(nrow = nrow(blacklist),ncol = 1)
-  paisl<-matrix(nrow = nrow(blacklist),ncol = 1)
-  for (i in 1:nrow(blacklist)){
-    compare <- ((ipcountry$de1 <= blacklist$ip_decimal[i]) & (blacklist$ip_decimal[i] <= ipcountry$de2))
-    pais[i,1]<-ipcountry[compare,4]
-    paisl[i,1]<-ipcountry[compare,3]
-  }
-  paisf<-data.frame(pais, paisl)
-  blacklist<-cbind(blacklist,paisf)
+library(proyectomaster)
+proyectomaster::show_number_blackip_coutry()
 ```
 
 
@@ -75,29 +45,8 @@ pais<-matrix(nrow = nrow(blacklist),ncol = 1)
 ##**Map**##
 
 ```{r, echo=FALSE, fig.width=17, fig.height=15}
-   a  <- dplyr::count(blacklist, paisl) 
-   map  <- joinCountryData2Map(a,
-                              joinCode = "ISO2",
-                              nameJoinColumn = "paisl",
-                              suggestForFailedCodes = T,
-                              mapResolution = "coarse",
-                              projection = NA, 
-                              verbose = T)
-  mapParams<-mapCountryData(map, missingCountryCol="gray99", oceanCol="aliceblue",
-                            nameColumnToPlot="n",
-                            mapTitle="SSL IPBL for Suricata / Snort (Aggressive) / for Country",
-                            mapRegion="world",
-                            colourPalette = c("Gray87","lightblue1","lightskyblue","royalblue1","royalblue3","royalblue4" ),
-                            borderCol="azure4",
-                            addLegend=F,
-                            catMethod="dategorical",
-                            
-  )
-  ##aplica los parametros en el mapa
-  do.call( addMapLegend, c( mapParams
-                            , legendLabels="all"
-                            , legendWidth=0.7)
-  )
+   library(proyectomaster)
+proyectomaster::plot_map()
 ```
 
 More information via ([GitHub](https://github.com/MARIU16/proyecto_master))
