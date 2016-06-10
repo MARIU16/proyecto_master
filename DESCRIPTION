@@ -8,7 +8,7 @@ Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Imports:
-  ggplot2
+  ggplot2,
   iptools,
   dplyr,
   sp,
