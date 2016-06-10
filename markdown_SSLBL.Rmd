@@ -17,35 +17,45 @@ The origin source updates every 15 minutes.
 
 Ip's black list (SSLBL) can be used to compare with any ip's log and know who had visit a page, etc.
 
+
 **The next table shows the black list.**
 
 
-```{r,echo=FALSE}
+
+```{r, echo=FALSE, cache=TRUE}
   library(proyectomaster)
-proyectomaster::show_blacklist()
+library(iptools)
+q<-proyectomaster::get_blacklist_abuse()
+q
 ```
 
 
-**The range of ip's by countries was downloaded from: Geolite web page:** [Geoplite]('http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip')
 
-```{r, echo=FALSE}
- library(proyectomaster)
-proyectomaster::show_ip_countries()
-```
+The range of ip's by countries was downloaded from: **Geolite web page:** [Geoplite]('http://geolite.maxmind.com/download/geoip/database/GeoIPCountryCSV.zip')
+
+
+
 **Then we realized the matching between the SSLBL and IPS by countries and the following result was obtained**
+
 
 ```{r, echo=FALSE}
 library(proyectomaster)
-proyectomaster::show_number_blackip_coutry()
+library(iptools)
+s<-proyectomaster::get_number_blackip_coutry()
+s
 ```
+
 
 
 **And finally we show the result**
 
+
 ##**Map**##
 
-```{r, echo=FALSE, fig.width=17, fig.height=15}
-   library(proyectomaster)
+```{r, echo=FALSE, fig.width=17, fig.height=15, warning=FALSE}
+   library(proyectomaster, warn.conflicts = FALSE)
+library(iptools)
+library(rworldmap, warn.conflicts = FALSE, warning(call. = FALSE))
 proyectomaster::plot_map()
 ```
 
