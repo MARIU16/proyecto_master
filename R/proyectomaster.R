@@ -10,7 +10,7 @@ get_blacklist_abuse<-function() {
   ip_decimal<-ip_to_numeric(ip)
   protocolo<-l[,2]
   puerto<-l[,7]
-  tabla1<-data.frame(ip_decimal,ip,protocolo,puerto, stringsAsFactors = FALSE)
+  blacklist<-data.frame(ip_decimal,ip,protocolo,puerto, stringsAsFactors = FALSE)
 }
 
 #' Title
@@ -20,7 +20,7 @@ get_blacklist_abuse<-function() {
 #' @param
 #' @examples
 show_bl<-function(){
-  View(tabla1)
+  View(blacklist)
 }
 
 #' Title
@@ -37,7 +37,7 @@ get_ip_countries<-function(){
   de2<-p[,4]
   pa<-as.character(p[,5])
   psa<-as.character(p[,6])
-  tabla2<-data.frame(de1,de2,pa,psa, stringsAsFactors = FALSE)
+  ipcountry<-data.frame(de1,de2,pa,psa, stringsAsFactors = FALSE)
 }
 
 
@@ -48,15 +48,15 @@ get_ip_countries<-function(){
 #' @param
 #' @examples
 blacklist_countries<-function(){
-  pais<-matrix(nrow = nrow(tabla1),ncol = 1)
-  paisl<-matrix(nrow = nrow(tabla1),ncol = 1)
-  for (i in 1:nrow(tabla1)){
-    compare <- ((tabla2$de1 <= tabla1$ip_decimal[i]) & (tabla1$ip_decimal[i] <= tabla2$de2))
-    pais[i,1]<-tabla2[compare,4]
-    paisl[i,1]<-tabla2[compare,3]
+  pais<-matrix(nrow = nrow(blacklist),ncol = 1)
+  paisl<-matrix(nrow = nrow(blacklist),ncol = 1)
+  for (i in 1:nrow(blacklist)){
+    compare <- ((ipcountry$de1 <= blacklist$ip_decimal[i]) & (blacklist$ip_decimal[i] <= ipcountry$de2))
+    pais[i,1]<-ipcountry[compare,4]
+    paisl[i,1]<-ipcountry[compare,3]
   }
   paisf<-data.frame(pais, paisl)
-  tabla1<-cbind(tabla1,paisf)
+  blacklist<-cbind(blacklist,paisf)
 }
 
 #' Title
@@ -78,7 +78,7 @@ show_bl_coutry<-function(){
 #' @examples
 plot_map<-function(){
   ##total cantidad por pais
-  a  <- dplyr::count(tabla1, paisl) 
+  a  <- dplyr::count(blacklist, paisl) 
   ##crea el mapa
   map  <- joinCountryData2Map(a,
                               joinCode = "ISO2",
@@ -105,3 +105,4 @@ plot_map<-function(){
   )
   
 }
+
